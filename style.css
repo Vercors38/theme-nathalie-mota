@@ -1,0 +1,119 @@
+/*
+Theme Name: Nathalie Mota
+Theme URI: https://github.com/Vercors38/theme-nathalie-mota
+Author: Nathalie Mota
+Description: Thème sur mesure WordPress pour la photographe Nathalie Mota.
+Version: 1.0
+*/
+
+/* Reset & Styles généraux */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Space Mono', monospace;
+    color: #000;
+    background-color: #fff;
+}
+
+/* Header */
+.site-header {
+    width: 100%;
+    padding: 20px 50px;
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.site-logo img {
+    max-height: 14px;
+    width: auto;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+/* Footer */
+.site-footer {
+    width: 100%;
+    padding: 30px 50px;
+    background: #fff;
+    border-top: 1px solid #e5e5e5;
+    margin-top: 50px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: #000;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.copyright p {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+/* Modale de contact */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 600px;
+    padding: 40px;
+    position: relative;
+}
