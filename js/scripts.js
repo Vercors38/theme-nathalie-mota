@@ -1,18 +1,27 @@
 document.addEventListener('DOMContentLoaded', function () {
     const modal = document.getElementById('contact-modal');
     
-    // Sélectionne tous les éléments ou liens ouvrant la modale
-    const contactBtns = document.querySelectorAll('a[href*="contact"], .btn-contact');
+    // 1. GESTION DE LA MODALE DE CONTACT
+    const contactBtns = document.querySelectorAll('a[href*="contact"], .btn-contact, .btn-modal-contact');
 
     if (modal) {
-        // Ouverture de la modale
         contactBtns.forEach(btn => {
             btn.addEventListener('click', function (e) {
-                // Si c'est un lien du menu ou une ancre vers #contact, on annule la redirection
-                if (btn.getAttribute('href') === '#contact' || btn.innerText.toLowerCase().includes('contact')) {
+                if (btn.getAttribute('href') === '#contact' || btn.innerText.toLowerCase().includes('contact') || btn.classList.contains('btn-modal-contact')) {
                     e.preventDefault();
+                    
+                    // Récupération de la référence photo envoyée via l'attribut data-reference
+                    const photoRef = btn.getAttribute('data-reference');
+                    if (photoRef) {
+                        // Ciblage précis du champ ref-photo dans Contact Form 7
+                        const refInput = modal.querySelector('input[name="ref-photo"]');
+                        if (refInput) {
+                            refInput.value = photoRef;
+                        }
+                    }
+
+                    // Ouverture avec transition CSS
                     modal.classList.remove('hidden');
-                    // Timeout léger pour laisser le temps au CSS de lancer la transition d'opacité
                     setTimeout(() => {
                         modal.classList.add('active');
                     }, 10);
@@ -20,14 +29,42 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // Fermeture de la modale au clic à l'extérieur du contenu
+        // Fermeture de la modale au clic à l'extérieur
         modal.addEventListener('click', function (e) {
             if (e.target === modal) {
                 modal.classList.remove('active');
                 setTimeout(() => {
                     modal.classList.add('hidden');
-                }, 300); // 300ms correspond à la durée de la transition CSS
+                }, 300);
             }
+        });
+    }
+
+    // 2. GESTION DE LA MINIATURE AU SURVOL DES FLÈCHES (Navigation Photo)
+    const arrows = document.querySelectorAll('.nav-arrow');
+    const previewContainer = document.querySelector('.nav-thumbnail-preview');
+
+    if (arrows.length && previewContainer) {
+        arrows.forEach(arrow => {
+            arrow.addEventListener('mouseenter', function () {
+                const targetThumbClass = this.getAttribute('data-thumb');
+                const targetThumb = previewContainer.querySelector('.' + targetThumbClass);
+
+                // Masquer toutes les miniatures
+                previewContainer.querySelectorAll('.thumbnail-item').forEach(item => {
+                    item.style.display = 'none';
+                });
+
+                // Afficher la bonne miniature
+                if (targetThumb) {
+                    targetThumb.style.display = 'block';
+                    previewContainer.style.opacity = '1';
+                }
+            });
+
+            arrow.addEventListener('mouseleave', function () {
+                previewContainer.style.opacity = '0';
+            });
         });
     }
 });
