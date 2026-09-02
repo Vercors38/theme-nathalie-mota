@@ -76,6 +76,7 @@ if (have_posts()) :
         if ($categories) :
             $cat_id = $categories[0]->term_id;
             
+            // 1. Recherche dans la même catégorie
             $related_args = array(
                 'post_type'      => 'photo',
                 'posts_per_page' => 2,
@@ -92,12 +93,29 @@ if (have_posts()) :
 
             $related_query = new WP_Query($related_args);
 
+            // 2. Fallback si pas assez de photos dans cette catégorie
+            if (!$related_query->have_posts()) {
+                $related_args = array(
+                    'post_type'      => 'photo',
+                    'posts_per_page' => 2,
+                    'post__not_in'   => array(get_the_ID()),
+                    'orderby'        => 'rand',
+                );
+                $related_query = new WP_Query($related_args);
+            }
+
             if ($related_query->have_posts()) : ?>
                 <section class="related-photos-section">
                     <h3>VOUS AIMEREZ AUSSI</h3>
                     <div class="related-photos-grid">
                         <?php while ($related_query->have_posts()) : $related_query->the_post(); ?>
-                            <?php get_template_part('templates_parts/photo_block'); ?>
+                            <div class="related-photo-item">
+                                <a href="<?php the_permalink(); ?>">
+                                    <?php if (has_post_thumbnail()) : ?>
+                                        <?php the_post_thumbnail('medium_large'); ?>
+                                    <?php endif; ?>
+                                </a>
+                            </div>
                         <?php endwhile; ?>
                     </div>
                 </section>
