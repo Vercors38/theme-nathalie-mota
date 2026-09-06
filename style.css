@@ -294,3 +294,24 @@ body {
         height: auto;
     }
 }
+
+/* Hero Header */
+.hero-header {
+    height: 70vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-header h1 {
+    font-size: 4.5rem;
+    color: transparent;
+    -webkit-text-stroke: 2px #fff; /* Effet de texte contour comme sur la maquette */
+    text-transform: uppercase;
+    font-weight: 900;
+    text-align: center;
+}
