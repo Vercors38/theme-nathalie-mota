@@ -41,10 +41,50 @@ if ($hero_query->have_posts()) {
 <section class="photo-catalog">
     <div class="container">
 
-        <!-- Zone des filtres (Partie C à venir) -->
         <div class="photo-filters">
-            <!-- Les dropdowns seront intégrés ici -->
-        </div>
+    <div class="filter-group">
+        <!-- Filtre Catégorie -->
+        <?php
+        $categories = get_terms(array(
+            'taxonomy'   => 'categorie-photo',
+            'hide_empty' => false,
+        ));
+        ?>
+        <select id="filter-category" name="category">
+            <option value="">CATÉGORIES</option>
+            <?php if (!empty($categories) && !is_wp_error($categories)) : ?>
+                <?php foreach ($categories as $cat) : ?>
+                    <option value="<?php echo esc_attr($cat->slug); ?>"><?php echo esc_html($cat->name); ?></option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+
+        <!-- Filtre Format -->
+        <?php
+        $formats = get_terms(array(
+            'taxonomy'   => 'format-photo',
+            'hide_empty' => false,
+        ));
+        ?>
+        <select id="filter-format" name="format">
+            <option value="">FORMATS</option>
+            <?php if (!empty($formats) && !is_wp_error($formats)) : ?>
+                <?php foreach ($formats as $format) : ?>
+                    <option value="<?php echo esc_attr($format->slug); ?>"><?php echo esc_html($format->name); ?></option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+    </div>
+
+    <div class="filter-group">
+        <!-- Tri par date -->
+        <select id="filter-order" name="order">
+            <option value="DESC">TRIER PAR</option>
+            <option value="DESC">Nouveautés (plus récentes)</option>
+            <option value="ASC">Les plus anciennes</option>
+        </select>
+    </div>
+</div>
 
         <!-- Grille de photos -->
         <div class="photo-grid" id="photo-grid">
